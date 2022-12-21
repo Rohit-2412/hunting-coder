@@ -16,7 +16,7 @@ const Blog = () => {
         <div className="blogs">
             <main className={styles.main}>
                 {/* heading */}
-                <h1>Popular Blogs</h1>
+                {/* <h1>Popular Blogs</h1> */}
 
                 {/* using map function to display all the blogs */}
                 {blogs.map((blogitem) => {

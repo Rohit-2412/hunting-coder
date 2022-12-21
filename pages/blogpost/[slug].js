@@ -1,16 +1,25 @@
 import React from 'react'
 import styles from '../../styles/Blogpost.module.css'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 const slug = () => {
+    const [blog, setBlog] = useState()
     const router = useRouter();
-    const { slug } = router.query;
+    useEffect(() => {
+        if (!router.isReady) return;
+        const { slug } = router.query;
+        fetch(`http://localhost:3000/api/getblog?slug=${slug}`).then((blog) => {
+            return blog.json();
+        }).then((parsed) => {
+            setBlog(parsed)
+        })
+    }, [router.isReady])
     return (
         <div className={styles.container}>
             <main className={styles.main}>
-                <h1>Title of the page {slug}</h1>
-                <hr />
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid deserunt debitis odit animi, et non ipsam quidem ducimus repudiandae suscipit, alias obcaecati expedita?</p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti delectus atque cum est, dolores neque quos veritatis, quibusdam unde tempore cumque beatae sed laboriosam reiciendis aut? Tenetur sapiente vero quod in similique saepe beatae autem, repellat nam reiciendis, itaque, quas quae ullam sunt totam illum magnam? Quis iste adipisci, deserunt a sit nemo cupiditate similique repellat nisi? Est quaerat dolore, omnis rerum illum mollitia reprehenderit sint optio consectetur impedit dolorum nulla consequuntur deleniti, veritatis facere assumenda expedita incidunt? Vel aspernatur perspiciatis reiciendis nam, sunt aliquid illo esse porro repellendus amet ipsa explicabo dolor praesentium velit optio magnam quas iusto. Numquam.
+                {/* use logical and (&&) to check if the blog is loaded or not */}
+                <h1>{blog && blog.title}</h1>
+                <p>{blog && blog.content}</p>
             </main>
         </div >
     )
