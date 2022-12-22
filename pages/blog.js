@@ -2,16 +2,18 @@ import React, { useEffect } from 'react'
 import styles from '../styles/Blog.module.css'
 import Link from 'next/link'
 import { useState } from 'react'
-const Blog = () => {
-    const [blogs, setBlogs] = useState([])
+import * as fs from 'fs';
+import { deepStrictEqual } from 'assert';
+const Blog = (props) => {
+    const [blogs, setBlogs] = useState(props.allBlogs)
 
-    useEffect(() => {
-        fetch("http://localhost:3000/api/blogs").then((a) => {
-            return a.json();
-        }).then((data) => {
-            setBlogs(data)
-        })
-    }, [])
+    // useEffect(() => {
+    //     fetch("http://localhost:3000/api/blogs").then((a) => {
+    //         return a.json();
+    //     }).then((data) => {
+    //         setBlogs(data)
+    //     })
+    // }, [])
     return (
         <div className="blogs">
             <main className={styles.main}>
@@ -36,4 +38,21 @@ const Blog = () => {
     )
 }
 
+export async function getStaticProps(context) {
+    let data = await fs.promises.readdir('blogdata')
+    let myFile;
+    let allBlogs = [];
+
+    for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        myFile = await fs.promises.readFile(('blogdata/' + element), 'utf-8')
+        allBlogs.push(JSON.parse(myFile))
+    }
+
+    return {
+        props: {
+            allBlogs
+        }
+    }
+}
 export default Blog
