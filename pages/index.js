@@ -10,33 +10,41 @@ export default function Home() {
                 <meta name="keywords" content="nextjs, huntingcoder blog, hunting coder" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            {/* <Script src='/sc.js' strategy="lazyOnload"></Script> */}
 
             <main className={styles.main}>
+                <div className={styles.imagewrap}>
+                    {/* <Image className={styles.myImg} src="/homeimg.jfif" width={237} height={158}/> */}
+                    <img className={styles.myImg} src="/img.jfif" width={237} height={158} alt="hunting coder" />
+                </div>
                 <h1 className={styles.title}>
-                    Hunting Coder
+                    <span className='dummy'>&lt;HuntingCoder/&gt;</span>
                 </h1>
 
-                <p className={styles.description}>
-                    A blog for hunting coders by a hunting coder
-                </p>
-
-                <div className="blogs">
-                    <h2>Popular Blogs</h2>
-                    <div className="blogItem">
-                        <h3>How to learn JavaScript in 2022?</h3>
-                        <p>JavaScript is the language used to design logic for the web</p>
+                {/* <div className={`${styles1.con} ${styles2.con}`}> */}
+                <div>
+                    <h2 className={styles.h2}>Latest Blogs</h2>
+                    <div>
+                        <h3 className={styles.h3}>How to learn JavaScript in 2022?</h3>
+                        <p className={styles.p}>JavaScript is the language used to design logic for the web. Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic error voluptatum impedit!</p>
+                        <button className={styles.btn}>Read More</button>
                     </div>
-                    <div className="blogItem">
-                        <h3>How to learn JavaScript in 2022?</h3>
-                        <p>JavaScript is the language used to design logic for the web</p>
+                    <div>
+                        <h3 className={styles.h3}>How to learn JavaScript in 2022?</h3>
+                        <p className={styles.p}>JavaScript is the language used to design logic for the web. Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic error voluptatum impedit!</p>
+                        <button className={styles.btn}>Read More</button>
                     </div>
-                    <div className="blogItem">
-                        <h3>How to learn JavaScript in 2022?</h3>
-                        <p>JavaScript is the language used to design logic for the web</p>
+                    <div>
+                        <h3 className={styles.h3}>How to learn JavaScript in 2022?</h3>
+                        <p className={styles.p}>JavaScript is the language used to design logic for the web. Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic error voluptatum impedit!</p>
+                        <button className={styles.btn}>Read More</button>
                     </div>
                 </div>
             </main>
 
+            <footer className={styles.footer}>
+
+            </footer>
         </div>
     )
 }

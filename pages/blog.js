@@ -1,58 +1,46 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/Blog.module.css'
-import Link from 'next/link'
-import { useState } from 'react'
+import Link from 'next/link';
 import * as fs from 'fs';
-import { deepStrictEqual } from 'assert';
+
+// Step 1: Collect all the files from blogdata directory
+// Step 2: Iterate through them and Display them
+
 const Blog = (props) => {
-    const [blogs, setBlogs] = useState(props.allBlogs)
-
+    console.log(props)
+    const [blogs, setBlogs] = useState(props.allBlogs);
     // useEffect(() => {
-    //     fetch("http://localhost:3000/api/blogs").then((a) => {
-    //         return a.json();
-    //     }).then((data) => {
-    //         setBlogs(data)
-    //     })
+
     // }, [])
-    return (
-        <div className="blogs">
-            <main className={styles.main}>
-                {/* heading */}
-                {/* <h1>Popular Blogs</h1> */}
+    return <div className={styles.container}>
+        <main className={styles.main}>
+            {blogs.map((blogitem) => {
+                return <div key={blogitem.slug}>
+                    <Link href={`/blogpost/${blogitem.slug}`}>
+                        <h3 className={styles.blogItemh3}>{blogitem.title}</h3></Link>
+                    <p className={styles.blogItemp}>{blogitem.metadesc.split(" ").slice(0, 15).join(" ")}...</p>
+                    <Link href={`/blogpost/${blogitem.slug}`}><button className={styles.btn}>Read More</button></Link>
+                </div>
+            })}
+        </main>
+    </div>
+};
 
-                {/* using map function to display all the blogs */}
-                {blogs.map((blogitem) => {
-                    return <div key={blogitem.title}>
-                        <Link href={`/blogpost/${blogitem.slug}`}>
-                            <h2>{blogitem.title}</h2>
-                        </Link>
-                        <p className={styles.blogitemp}>
-                            {/* display the first 20 words and then ...*/}
-                            {blogitem.content.split(" ").slice(0, 20).join(" ")}...
-                        </p>
-                    </div>
-                })}
-
-            </main>
-        </div>
-    )
-}
 
 export async function getStaticProps(context) {
-    let data = await fs.promises.readdir('blogdata')
-    let myFile;
+    let data = await fs.promises.readdir("blogdata");
+    let myfile;
     let allBlogs = [];
-
-    for (let i = 0; i < data.length; i++) {
-        const element = data[i];
-        myFile = await fs.promises.readFile(('blogdata/' + element), 'utf-8')
-        allBlogs.push(JSON.parse(myFile))
+    for (let index = 0; index < data.length; index++) {
+        const item = data[index];
+        console.log(item)
+        myfile = await fs.promises.readFile(('blogdata/' + item), 'utf-8')
+        allBlogs.push(JSON.parse(myfile))
     }
 
     return {
-        props: {
-            allBlogs
-        }
+        props: { allBlogs }, // will be passed to the page component as props
     }
 }
-export default Blog
+
+export default Blog;
