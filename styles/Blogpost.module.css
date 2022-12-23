@@ -8,6 +8,13 @@
     justify-content: flex-start;
     padding-top: 3rem;
 }
+
 .container {
-    padding: 0 10rem;
+    padding: 0 22rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        padding: 0 2.5rem;
+    }
 }

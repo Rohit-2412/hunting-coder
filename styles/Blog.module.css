@@ -28,3 +28,17 @@
     font-size: 12px;
     margin-bottom: 9px;
 }
+
+.container {
+    max-width: 45vw;
+    margin: auto;
+}
+
+@media (max-width: 768px) {
+    .blogItemp {
+        max-width: 90vw;
+    }
+    .container {
+        max-width: 90vw;
+    }
+}

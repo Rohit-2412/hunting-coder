@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from '../styles/Blog.module.css'
 import Link from 'next/link';
 import * as fs from 'fs';
@@ -7,7 +7,6 @@ import * as fs from 'fs';
 // Step 2: Iterate through them and Display them
 
 const Blog = (props) => {
-    console.log(props)
     const [blogs, setBlogs] = useState(props.allBlogs);
     // useEffect(() => {
 
