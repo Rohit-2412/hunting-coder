@@ -1,7 +1,12 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import React, { useState } from 'react';
+import Link from 'next/link';
+import * as fs from 'fs';
+import Image from 'next/image';
+export default function Home(props) {
+    const [blogs, setBlogs] = useState(props.allBlogs);
 
-export default function Home() {
     return (
         <div className={styles.container}>
             <Head>
@@ -14,31 +19,30 @@ export default function Home() {
 
             <main className={styles.main}>
                 <div className={styles.imagewrap}>
-                    {/* <Image className={styles.myImg} src="/homeimg.jfif" width={237} height={158}/> */}
-                    <img className={styles.myImg} src="/img.jfif" width={237} height={158} alt="hunting coder" />
+                    <Image className={styles.myImg} src="/img.jfif" width={237} height={158} alt={"Image"} />
+                    {/* <img className={styles.myImg} src="/img.jfif" width={237} height={158} alt="hunting coder" /> */}
                 </div>
                 <h1 className={styles.title}>
                     <span className='dummy'>&lt;HuntingCoder/&gt;</span>
                 </h1>
 
-                {/* <div className={`${styles1.con} ${styles2.con}`}> */}
                 <div>
                     <h2 className={styles.h2}>Latest Blogs</h2>
-                    <div>
+                    {/* <div>
                         <h3 className={styles.h3}>How to learn JavaScript in 2022?</h3>
                         <p className={styles.p}>JavaScript is the language used to design logic for the web. Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic error voluptatum impedit!</p>
                         <button className={styles.btn}>Read More</button>
-                    </div>
-                    <div>
-                        <h3 className={styles.h3}>How to learn JavaScript in 2022?</h3>
-                        <p className={styles.p}>JavaScript is the language used to design logic for the web. Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic error voluptatum impedit!</p>
-                        <button className={styles.btn}>Read More</button>
-                    </div>
-                    <div>
-                        <h3 className={styles.h3}>How to learn JavaScript in 2022?</h3>
-                        <p className={styles.p}>JavaScript is the language used to design logic for the web. Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic error voluptatum impedit!</p>
-                        <button className={styles.btn}>Read More</button>
-                    </div>
+                    </div> */}
+                    {/* display only the first three blogs */}
+
+                    {blogs.slice(0, 3).map((blog, index) => (
+                        <div key={index}>
+                            <h3 className={styles.h3}>{blog.title}</h3>
+                            <p className={styles.p}>{blog.metadesc}</p>
+                            <button className={styles.btn}>Read More</button>
+                        </div>
+                    ))}
+
                 </div>
             </main>
 
@@ -47,4 +51,19 @@ export default function Home() {
             </footer>
         </div>
     )
+}
+
+export async function getStaticProps(context) {
+    let data = await fs.promises.readdir("blogdata");
+    let myfile;
+    let allBlogs = [];
+    for (let index = 0; index < data.length; index++) {
+        const item = data[index];
+        myfile = await fs.promises.readFile(('blogdata/' + item), 'utf-8')
+        allBlogs.push(JSON.parse(myfile))
+    }
+
+    return {
+        props: { allBlogs }, // will be passed to the page component as props
+    }
 }
